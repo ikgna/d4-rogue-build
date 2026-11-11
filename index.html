@@ -106,6 +106,43 @@ td.tg{color:var(--muted);white-space:nowrap}
 .tag.inf{color:var(--ember);border-color:var(--ember)}
 .story h3{margin-top:26px}
 .story p{max-width:70ch}
+
+/* touch targets */
+label.ck{padding:12px 8px}
+label.ck input{width:22px;height:22px}
+label.ck{grid-template-columns:26px 1fr}
+.step button{width:44px;height:44px;font-size:24px}
+button,.filters button{min-height:42px}
+input[type=number]{min-height:46px}
+td input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent)}
+/* phone: tab bar at the bottom, in thumb reach */
+@media (max-width:759px){
+  body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  nav{position:fixed;top:auto;bottom:0;left:0;right:0;margin:0;border-top:1px solid var(--line);border-bottom:0;padding:0 8px env(safe-area-inset-bottom,0px);z-index:20}
+  nav a{padding:14px 12px 12px;font-size:16px;border-bottom:0;border-top:3px solid transparent}
+  nav a[aria-current="page"]{border-top-color:var(--accent)}
+  header{padding-top:18px}
+}
+/* tablet and wide: side navigation, larger text, two columns */
+@media (min-width:760px){
+  body{font-size:17px}
+  .wrap{max-width:1180px;display:grid;grid-template-columns:220px minmax(0,1fr);grid-template-areas:"h h" "n c" "f f";column-gap:32px}
+  header{grid-area:h}
+  footer{grid-area:f}
+  section{grid-area:c;padding-top:4px}
+  nav{grid-area:n;position:sticky;top:12px;align-self:start;margin:0;padding:0;border:0;background:transparent}
+  nav .tabs{flex-direction:column;overflow:visible;gap:2px;max-width:none}
+  nav a{padding:13px 14px;border-bottom:0;border-left:3px solid transparent;border-radius:0 8px 8px 0;font-size:18px}
+  nav a[aria-current="page"]{border-left-color:var(--accent);background:var(--surface)}
+  body::before{display:none}
+  th,td{font-size:16px;padding:12px 14px}
+  .lv td:first-child{width:56px;font-size:22px}
+  .grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .bars li b,.skill b{font-size:20px}
+}
+@media (min-width:1100px){
+  nav a{font-size:19px}
+}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
 </style>
 </head><body>
@@ -475,6 +512,8 @@ td.tg{color:var(--muted);white-space:nowrap}
       if(a.getAttribute('href')==='#'+h)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
     });
     window.scrollTo(0,0);
+    var cur=document.querySelector('nav a[aria-current]');
+    try{if(cur)cur.scrollIntoView({inline:'center',block:'nearest'})}catch(e){}
   }
   window.addEventListener('hashchange',show);
 
