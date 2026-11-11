@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<title>Билд Разбойницы</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Layout: sticky tab bar over a single reading column; checklists persist per viewer. */
+:root{
+  --bg:#f4f3f6; --surface:#ffffff; --surface2:#ebe9f0; --line:#d6d2df;
+  --fg:#1c1a24; --muted:#5d5870; --accent:#2f8a3d; --accent-ink:#ffffff;
+  --ember:#b4532a; --warn:#9a6a00; --ok:#2f8a3d;
+  --head:'Barlow Condensed','Arial Narrow',sans-serif; --body:'Barlow',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14121b; --surface:#1d1a27; --surface2:#262233; --line:#363148;
+  --fg:#ece9f3; --muted:#a39db6; --accent:#7ccf6a; --accent-ink:#0f1a0c; --ember:#e58a5b; --warn:#e0b24a; --ok:#7ccf6a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14121b; --surface:#1d1a27; --surface2:#262233; --line:#363148;
+  --fg:#ece9f3; --muted:#a39db6; --accent:#7ccf6a; --accent-ink:#0f1a0c; --ember:#e58a5b; --warn:#e0b24a; --ok:#7ccf6a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.wrap{max-width:980px;margin:0 auto}
+header{padding:28px 0 12px}
+.eyebrow{font:600 13px var(--head);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(34px,6vw,56px)/1 var(--head);margin:6px 0 10px;text-wrap:balance;letter-spacing:.01em}
+h1 em{font-style:normal;color:var(--accent)}
+.lead{max-width:62ch;color:var(--muted);margin:0}
+h2{font:700 26px/1.1 var(--head);margin:0 0 14px;letter-spacing:.02em;text-wrap:balance}
+h3{font:600 19px/1.2 var(--head);margin:22px 0 8px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
+p{margin:0 0 12px;max-width:68ch}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:0 max(16px,env(safe-area-inset-left,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+nav .tabs{display:flex;gap:4px;overflow-x:auto;max-width:980px;margin:0 auto;scrollbar-width:thin}
+nav a{flex:none;padding:12px 14px;font:600 17px var(--head);letter-spacing:.04em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:3px solid transparent}
+nav a:hover{color:var(--fg)}
+nav a[aria-current="page"]{color:var(--fg);border-bottom-color:var(--accent)}
+nav a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+section{padding-top:26px}
+section[hidden]{display:none}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;min-width:0}
+.box h3:first-child{margin-top:0}
+.stats{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin:18px 0 6px}
+.stat{border-left:3px solid var(--accent);padding:2px 0 2px 12px}
+.stat b{display:block;font:700 22px/1.1 var(--head)}
+.stat span{color:var(--muted);font-size:14px}
+.pill{display:inline-block;font:600 12px var(--head);letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.hot{color:var(--accent);border-color:var(--accent)}
+.pill.late{color:var(--warn);border-color:var(--warn)}
+.note{border-left:3px solid var(--warn);background:var(--surface2);padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0;max-width:72ch;font-size:15px}
+.bar{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:6px 0 4px}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+.pbox{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pbox span{color:var(--muted);font-size:14px}
+button{font:600 15px var(--body);background:var(--surface2);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+ul.check{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+ul.check li{min-width:0}
+label.ck{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;padding:9px 8px;border-radius:6px;cursor:pointer}
+label.ck:hover{background:var(--surface2)}
+label.ck input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--accent)}
+label.ck small{display:block;color:var(--muted);font-size:14px;line-height:1.4}
+label.ck input:checked ~ div b{text-decoration:line-through;color:var(--muted)}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;font-size:15px}
+th{font:600 13px var(--head);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--surface2)}
+tr:last-child td{border-bottom:0}
+td.chk{width:44px}
+td .src{color:var(--muted);font-size:13px}
+.bars{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.bars li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.bars li::before{content:counter(s);font:700 22px/1 var(--head);color:var(--accent);padding-top:2px}
+.bars li div{min-width:0}
+.bars li b{font:600 18px var(--head);letter-spacing:.02em}
+.bars li span{display:block;color:var(--muted);font-size:15px}
+.skill{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line)}
+.skill:last-child{border-bottom:0}
+.skill b{font:600 18px var(--head);letter-spacing:.02em}
+.skill .rk{font:700 18px var(--head);color:var(--accent)}
+.skill p{grid-column:1/-1;margin:0;color:var(--muted);font-size:15px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:0 14px;margin-bottom:10px}
+summary{cursor:pointer;font:600 18px var(--head);padding:12px 0;letter-spacing:.02em}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+details p,details ul{margin-bottom:12px}
+details ul{padding-left:20px;color:var(--fg)}
+.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:8px 0 14px}
+footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+footer a{color:var(--accent)}
+input[type=number]{width:100%;max-width:140px;font:600 18px var(--body);background:var(--surface2);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:7px 10px;margin-top:6px;display:block}
+.step{display:inline-flex;align-items:center;gap:6px}
+.step button{width:34px;height:34px;padding:0;font-size:20px;line-height:1}
+.step output{display:inline-block;min-width:32px;text-align:center;font:700 20px var(--head)}
+td.tg{color:var(--muted);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head><body>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Diablo IV · Разбойница · 15 сезон</div>
+  <h1>Пронзающий выстрел с <em>ядом</em></h1>
+  <p class="lead">Дальнобойная разбойница: стрелы насквозь, Скрытность и Теневые клоны. Ниже всё, что нужно для прокачки до 32 уровня и для финальной сборки. Отмечай пункты галочками, прогресс сохраняется в этом браузере.</p>
+  <div class="stats">
+    <div class="stat"><b>S-tier</b><span>финальный билд</span></div>
+    <div class="stat"><b>Дальний бой</b><span>стиль игры</span></div>
+    <div class="stat"><b>Eaglehorn</b><span>ключевой уникальный лук</span></div>
+    <div class="stat"><b>70 уровень</b><span>переход на финал</span></div>
+  </div>
+</header>
+
+<nav aria-label="Разделы"><div class="tabs">
+  <a href="#obzor">Обзор</a><a href="#do-32">К 32 уровню</a><a href="#navyki">Навыки</a><a href="#ochki">Калькулятор</a><a href="#ekip">Экипировка</a><a href="#paragon">Парагон и руны</a><a href="#boy">Бой</a>
+</div></nav>
+
+<!-- ОБЗОР -->
+<section id="obzor" hidden>
+  <h2>О билде</h2>
+  <p>Основной урон наносит <b>Penetrating Shot</b>: стрела пробивает всю линию врагов и бьёт несколько раз. Яд (Poison Imbuement) накладывается на стрелы, а Теневые клоны и Тени повторяют твои выстрелы. Eaglehorn добавляет отскок стрел от стен, поэтому в тесных подземельях урон растёт.</p>
+  <div class="grid">
+    <div class="box"><h3>Сильные стороны</h3>
+      <p>Огромный урон по пачкам и боссам, безопасная дистанция, много мобильности: Dash, Shadow Step, Скрытность.</p></div>
+    <div class="box"><h3>Слабые стороны</h3>
+      <p>Зависит от экипировки (уникальные предметы, закалка). Стрелять в одного врага невыгодно: теряется эффект пронзания. Нужно следить за энергией.</p></div>
+    <div class="box"><h3>Альтернативы</h3>
+      <p>В S-tier также Dance of Knives (самый простой старт, без жёстких порогов) и Rain of Arrows. Death Trap спорный: одни оценивают на A, другие считают лучшим.</p></div>
+  </div>
+  <div class="note"><b>Что проверено, а что нет.</b> Скиллбар, экипировка и парагон финального билда взяты со страницы d4guides.gg (автор Chrix1848). План до 32 уровня составлен по гайду Maxroll и моим выводам: точной раскладки очков по уровням в источниках нет. Рейтинги меняются с патчами.</div>
+  <h3>Источники</h3>
+  <p><a href="https://d4guides.gg/en/build/rogue-penetrating-shot-poison-imbuement" target="_blank" rel="noopener">d4guides.gg: финальный билд</a> · <a href="https://maxroll.gg/d4/build-guides/penetrating-shot-rogue-leveling-guide" target="_blank" rel="noopener">Maxroll: прокачка</a> · <a href="https://diablobytes.com/diablo-iv/builds/rogue-tier-list/" target="_blank" rel="noopener">DiabloBytes: тир-лист</a></p>
+</section>
+
+<!-- К 32 -->
+<section id="do-32" hidden>
+  <h2>Что иметь к 32 уровню</h2>
+  <div class="toolbar">
+    <div style="min-width:220px;flex:1">
+      <div class="pbox"><b>Прогресс</b><span id="p32t">0 из 0</span></div>
+      <div class="bar"><i id="p32b"></i></div>
+    </div>
+    <button type="button" id="reset32">Сбросить галочки</button>
+  </div>
+  <div class="note">Количество очков навыков и порядок вложения ниже — мой план на основе гайда. Maxroll подтверждает только ключевое: после 30 уровня большинство синергий уже открыто, лишние очки идут сначала в основной навык.</div>
+
+  <h3>Навыки</h3>
+  <ul class="check" data-group="l32">
+    <li><label class="ck"><input type="checkbox" data-key="s1"><div><b>Основной навык: Penetrating Shot</b><small>Сначала Forceful Arrow, затем Penetrating Shot. Вариант Ballista даёт максимальный урон.</small></div></label></li>
+    <li><label class="ck"><input type="checkbox" data-key="s2"><div><b>Dash</b><small>Мобильность и уход от ударов.</small></div></label></li>
+    <li><label class="ck"><input type="checkbox" data-key="s3"><div><b>Poison Imbuement</b><small>Яд на стрелы. Использовать на боссах и элитных врагах.</small></div></label></li>
+    <li><label class="ck"><input type="checkbox" data-key="s4"><div><b>Shadow Imbuement</b><small>Для пачек врагов. Не держи обе импрегнации на перезарядке одновременно.</small></div></label></li>
+    <li><label class="ck"><input type="checkbox" data-key="s5"><div><b>Combo Points (с 15 уровня)</b><small>Открывается на 15 уровне, пока как рабочая специализация.</small></div></label></li>
+    <li><label class="ck"><input type="checkbox" data-key="s6"><div><b>Ключевые синергии открыты</b><small>К 30 уровню большинство уже доступно. Лишние очки — в ранги основного навыка, потом во вспомогательные.</small></div></label></li>
+  </ul>
+
+  <h3>Снаряжение</h3>
+  <ul class="check" data-group="l32">
+    <li><label class="ck"><input type="checkbox" data-key="g1"><div><b>Лучшее дальнобойное оружие</b><small>От него считается весь урон. Улучшай его первым.</small></div></label></li>
+    <li><label class="ck"><input type="checkbox" data-key="g2"><div><b>Закалка оружия</b><small>% урона, урон по близким врагам или Vulnerable. При нехватке живучести добавь сопротивления, жизнь, броню.</small></div></label></li>
+    <li><label class="ck"><input type="checkbox" data-key="g3"><div><b>Аспекты: High Velocity, Ranger's, Malice, Imitated Imbuement, Debilitating Toxins</b><small>Берутся из выпадения или гэмбла.</small></div></label></li>
+    <li><label class="ck"><input type="checkbox" data-key="g4"><div><b>Гэмбл по слотам</b><small>Одноручное оружие: атака. Грудь и штаны: защита. Ботинки: мобильность. Кольца: ресурс.</small></div></label></li>
+    <li><label class="ck"><input type="checkbox" data-key="g5"><div><b>Самоцветы-осколки</b><small>Splinter of Hellfire, Lesser Splinter of the Mother, Lesser Splinter of Lies, Splinter of the Black Soulstone. Splinter of Pain не бери.</small></div></label></li>
+    <li><label class="ck"><input type="checkbox" data-key="g6"><div><b>Eaglehorn или Condemnation (если выпали)</b><small>Eaglehorn позволяет раньше перейти на финальный билд.</small></div></label></li>
+  </ul>
+
+  <h3>Спутники и подготовка</h3>
+  <ul class="check" data-group="l32">
+    <li><label class="ck"><input type="checkbox" data-key="m1"><div><b>Наёмник Raheir с Bastion</b><small>Основной наёмник. Varyana с Bloodthirst как подкрепление.</small></div></label></li>
+    <li><label class="ck"><input type="checkbox" data-key="m2"><div><b>Парагон пока не нужен</b><small>Парагон открывается с 70 уровня, до этого очков нет.</small></div></label></li>
+  </ul>
+</section>
+
+<!-- НАВЫКИ -->
+<section id="navyki" hidden>
+  <h2>Финальный скиллбар</h2>
+  <p>Специализация: <b>Preparation</b>. Каждая трата энергии сокращает перезарядку ультимейта, а ультимейт сбрасывает перезарядки остальных навыков.</p>
+  <ol class="bars">
+    <li><div><b>Shadow Clone</b><span>Ранг 1. Sentry (стационарный стрелок с дополнительными зарядами), Weaken и Vulnerable.</span></div></li>
+    <li><div><b>Penetrating Shot</b><span>Ранг 15. Shadow Shot (две Тени стреляют с каждым выстрелом), Damage Increase, Ferocity (+7% урона за стак).</span></div></li>
+    <li><div><b>Shadow Step</b><span>Ранг 1. Artifice (приманка, взрывается через 2 секунды), Cooldown, Unstoppable (включает Tibault's Will).</span></div></li>
+    <li><div><b>Dash</b><span>Ранг 5. Primer (Скрытность после рывка и Ferocity), заряды и сокращение перезарядки.</span></div></li>
+    <li><div><b>Concealment</b><span>Ранг 13. Recuperate (Fortify, при окончании сбивает с ног близких врагов).</span></div></li>
+    <li><div><b>Poison Imbuement</b><span>Ранг 15. Toxic Touch (повышает Potency), Duration (тратит Ferocity), Cooldown.</span></div></li>
+  </ol>
+  <h3>Вне панели</h3>
+  <div class="skill"><b>Dark Shroud</b><span class="rk">15</span><p>Создаётся руной Mot. Overflow (1) добавляет регенерацию энергии за каждую тень.</p></div>
+  <div class="skill"><b>Прочие ранги</b><span class="rk">по 1</span><p>Overflow, узлы Shadow Clone и Shadow Step, Consume Chance, скорость движения, длительность и дополнительные узлы перезарядки.</p></div>
+</section>
+
+<!-- КАЛЬКУЛЯТОР -->
+<section id="ochki" hidden>
+  <h2>Калькулятор очков навыков</h2>
+  <div class="note">Правило «1 очко за уровень» и число 58 — оценка, а не точные данные игры. В одном из гайдов указано 50 очков за прокачку и ещё 8 за награды Renown. Если в игре у тебя другое число, впиши его в поле «Свои очки».</div>
+  <div class="grid" style="margin-bottom:14px">
+    <div class="box">
+      <label for="lvl"><b>Уровень персонажа</b></label>
+      <input id="lvl" type="number" min="1" max="60" value="32" inputmode="numeric">
+      <p style="margin:8px 0 0;color:var(--muted);font-size:14px">По оценке: уровень − 1 очков.</p>
+    </div>
+    <div class="box">
+      <label for="ren"><b>Очки Renown</b></label>
+      <input id="ren" type="number" min="0" max="8" value="0" inputmode="numeric">
+      <p style="margin:8px 0 0;color:var(--muted);font-size:14px">До 8 очков за награды Renown.</p>
+    </div>
+    <div class="box">
+      <label for="own"><b>Свои очки (необязательно)</b></label>
+      <input id="own" type="number" min="0" max="80" placeholder="из игры" inputmode="numeric">
+      <p style="margin:8px 0 0;color:var(--muted);font-size:14px">Если заполнено, заменяет оценку.</p>
+    </div>
+  </div>
+  <div class="box" style="margin-bottom:14px">
+    <div class="pbox"><b id="avail">Доступно: 0</b><span id="spentlbl">Потрачено: 0 · Осталось: 0</span></div>
+    <div class="bar"><i id="spb"></i></div>
+    <p id="warn" style="margin:6px 0 0;color:var(--ember);font-size:14px" hidden>Потрачено больше, чем доступно. Убери лишние очки.</p>
+  </div>
+  <div class="filters" role="group" aria-label="Пресеты">
+    <button type="button" id="pre32">Оценка к 32 уровню</button>
+    <button type="button" id="preFin">Цели финального билда</button>
+    <button type="button" id="preClr">Очистить</button>
+  </div>
+  <div class="tw"><table id="sk">
+    <thead><tr><th>Навык</th><th>Очки</th><th>Цель в финале</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <p style="margin-top:12px;color:var(--muted);font-size:14px">Числа «цель в финале» взяты со страницы d4guides.gg и включают ранги от экипировки, поэтому в сумме превышают очки, которые даёт прокачка. Пресет «к 32» — мой примерный план, а не данные из источника.</p>
+</section>
+
+<!-- ЭКИПИРОВКА -->
+<section id="ekip" hidden>
+  <h2>Экипировка</h2>
+  <div class="toolbar">
+    <div style="min-width:220px;flex:1">
+      <div class="pbox"><b>Собрано</b><span id="pgt">0 из 0</span></div>
+      <div class="bar"><i id="pgb"></i></div>
+    </div>
+    <div class="filters" role="group" aria-label="Фильтр">
+      <button type="button" data-f="all" class="on">Все</button>
+      <button type="button" data-f="unique">Уникальные</button>
+      <button type="button" data-f="aspect">Аспекты</button>
+      <button type="button" data-f="todo">Не собрано</button>
+    </div>
+  </div>
+  <div class="tw"><table id="gear">
+    <thead><tr><th></th><th>Слот</th><th>Предмет</th><th>Закалка и свойства</th></tr></thead>
+    <tbody>
+      <tr data-t="unique"><td class="chk"><input type="checkbox" data-key="e-bow" aria-label="Лук собран"></td><td>Лук</td><td><b>Eaglehorn</b><br><span class="pill hot">уникальный</span></td><td>Стрелы отскакивают от стен, урон от яда (DoT), жизнь.</td></tr>
+      <tr data-t="unique"><td class="chk"><input type="checkbox" data-key="e-main" aria-label="Кинжал собран"></td><td>Основная рука</td><td><b>Etna's Lost Dagger</b><br><span class="pill hot">уникальный</span></td><td>DoT, жизнь. Нужен второй нефизический тип урона (поможет приманка Artifice).</td></tr>
+      <tr data-t="unique"><td class="chk"><input type="checkbox" data-key="e-pants" aria-label="Штаны собраны"></td><td>Штаны</td><td><b>Tibault's Will</b><br><span class="pill hot">уникальный</span></td><td>Жизнь, броня, сопротивление.</td></tr>
+      <tr data-t="aspect"><td class="chk"><input type="checkbox" data-key="e-helm" aria-label="Шлем собран"></td><td>Шлем</td><td><b>Aspect of Disobedience</b><br><span class="pill late">позже: Debilitating Toxins</span></td><td>Ранги импрегнаций, жизнь, перезарядка. Руническое слово Cir + Mot.</td></tr>
+      <tr data-t="aspect"><td class="chk"><input type="checkbox" data-key="e-chest" aria-label="Грудь собрана"></td><td>Грудь</td><td><b>Aspect of Debilitating Toxins</b></td><td>Жизнь, броня, сопротивление. Руническое слово Neo + Lac.</td></tr>
+      <tr data-t="aspect"><td class="chk"><input type="checkbox" data-key="e-gloves" aria-label="Перчатки собраны"></td><td>Перчатки</td><td><b>Aspect of Malice</b><br><span class="pill late">позже: Fists of Fate</span></td><td>Урон Vulnerable, DoT, урон ядом.</td></tr>
+      <tr data-t="aspect"><td class="chk"><input type="checkbox" data-key="e-boots" aria-label="Ботинки собраны"></td><td>Ботинки</td><td><b>Aspect of Mending Obscurity</b></td><td>Скорость движения, жизнь.</td></tr>
+      <tr data-t="aspect"><td class="chk"><input type="checkbox" data-key="e-off" aria-label="Левая рука собрана"></td><td>Левая рука</td><td><b>Aspect of Imitated Imbuement</b></td><td>Клоны и Тени копируют импрегнацию. Закалка: сила импрегнации.</td></tr>
+      <tr data-t="aspect"><td class="chk"><input type="checkbox" data-key="e-amu" aria-label="Амулет собран"></td><td>Амулет</td><td><b>Crushing Aspect</b><br><span class="pill late">позже: Earthstriker's</span></td><td>DoT, Vulnerable, урон ядом. Закалка: скорость движения.</td></tr>
+      <tr data-t="aspect"><td class="chk"><input type="checkbox" data-key="e-r1" aria-label="Кольцо 1 собрано"></td><td>Кольцо 1</td><td><b>Aspect of Alchemical Advantage</b><br><span class="pill late">позже: Corruption</span></td><td>DoT, Vulnerable, скорость атаки.</td></tr>
+      <tr data-t="aspect"><td class="chk"><input type="checkbox" data-key="e-r2" aria-label="Кольцо 2 собрано"></td><td>Кольцо 2</td><td><b>Neurotoxic Aspect</b></td><td>Vulnerable, DoT, скорость атаки.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Правила закалки и улучшения</h3>
+  <div class="grid">
+    <div class="box"><h3>Закалка</h3><p>Жизнь на шлеме, груди и штанах. DoT на луке, кинжале и перчатках. Сила импрегнации на левой руке. Скорость движения на ботинках и амулете.</p></div>
+    <div class="box"><h3>Мастерство</h3><p>Основное усиливает DoT, урон Vulnerable и жизнь.</p></div>
+    <div class="box"><h3>Самоцветы</h3><p>Grand Emerald в лук, кинжал и штаны. Soul Splinter в украшения. Позже — Abyssal splinters.</p></div>
+    <div class="box"><h3>Талисман</h3><p>Пять частей Legacy of the Sightless и Rustbitten Dirk в Ancestral Horadric Seal с шестью слотами.</p></div>
+  </div>
+  <div class="note"><b>Порядок сборки.</b> Сначала уникальные и мифические предметы, затем аспекты на остальные слоты, потом закалка и мастерство. Для финала Fists of Fate, Tibault's Will, Etna's Lost Dagger и Eaglehorn переводятся в мифические.</div>
+</section>
+
+<!-- ПАРАГОН -->
+<section id="paragon" hidden>
+  <h2>Парагон и руны</h2>
+  <div class="note">Парагон открывается с 70 уровня. До этого этот раздел нужен как план.</div>
+  <h3>Доски парагона по порядку</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Доска</th><th>Глиф</th></tr></thead>
+    <tbody>
+      <tr><td>Starter</td><td>Versatility</td></tr>
+      <tr><td>Cheap Shot</td><td>Efficacy</td></tr>
+      <tr><td>Eldritch Bounty</td><td>Tracker</td></tr>
+      <tr><td>Exploit Weakness</td><td>Canny</td></tr>
+      <tr><td>Danse Macabre</td><td>Bane</td></tr>
+    </tbody>
+  </table></div>
+  <p style="margin-top:12px">Подними все глифы до 51 уровня: с этого момента растёт радиус. Очки атрибутов внутри радиуса глифа включают его дополнительный бонус.</p>
+  <h3>Рунные слова</h3>
+  <div class="grid">
+    <div class="box"><b>Шлем: Cir + Mot</b><p>Cir даёт Offering после пяти применений. Mot создаёт Dark Shroud.</p></div>
+    <div class="box"><b>Грудь: Neo + Lac</b><p>Neo копит заряд, пока ты не получаешь урона по жизни в бою. Lac запускает насмешливый крик и снижает получаемый урон.</p></div>
+    <div class="box"><b>Для прокачки: Moni + Qua, Cir + Kry</b><p>Рекомендованы в гайде Maxroll для брони.</p></div>
+  </div>
+  <h3>Наёмники</h3>
+  <p>Raheir (танк) как основной и подкрепление. Subo (Molotov, Scorched Earth, Snipe, Incendiary Bolt) с Varyana для Bloodthirst. Страница-источник противоречит сама себе, так что проверь перед игрой.</p>
+</section>
+
+<!-- БОЙ -->
+<section id="boy" hidden>
+  <h2>Как играть</h2>
+  <h3>Ротация</h3>
+  <ol class="bars">
+    <li><div><b>Poison Imbuement</b><span>Включай первым. Клоны и Тени копируют яд только если он уже активен.</span></div></li>
+    <li><div><b>Shadow Clone</b><span>Ослабляет врагов и через Preparation сбрасывает перезарядки.</span></div></li>
+    <li><div><b>Concealment</b><span>Лечит и сокращает перезарядку ультимейта.</span></div></li>
+    <li><div><b>Penetrating Shot</b><span>Стреляй вдоль линии врагов. Первый выстрел ломает Скрытность и даёт бонус урона.</span></div></li>
+    <li><div><b>Dash и Shadow Step</b><span>Смени позицию и вернись в Скрытность.</span></div></li>
+  </ol>
+  <h3>Частые ошибки</h3>
+  <details><summary>Стрельба по одному врагу</summary><p>Пронзание тратится впустую. Выстраивай врагов в линию или бей по боссу, когда он рядом с мобами.</p></details>
+  <details><summary>Не выполняется условие Etna's</summary><p>Нужен второй нефизический тип урона. Поможет приманка Artifice у Shadow Step.</p></details>
+  <details><summary>Клон перед ядом</summary><p>Если сначала поставить Shadow Clone, он не копирует Poison Imbuement. Сначала яд.</p></details>
+  <details><summary>Пустая энергия</summary><p>Держи Dark Shroud через руну Mot: тени восполняют энергию.</p></details>
+  <details><summary>Потраченная Скрытность</summary><p>Каждый выход из Скрытности даёт урон и Fortify. Не ломай её без причины.</p></details>
+</section>
+
+<footer>Сезон 15 (Hell's Legacy). Данные собраны из открытых гайдов и могут измениться с патчами игры.
+  <button type="button" id="theme" style="margin-left:10px">Сменить тему</button></footer>
+</div>
+
+<script>
+(function(){
+  var KEY='rogue-build-v1', state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){state={}}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+
+  /* tabs */
+  var names=['obzor','do-32','navyki','ochki','ekip','paragon','boy'];
+  function show(){
+    var h=(location.hash||'').replace('#','');
+    if(names.indexOf(h)<0)h='obzor';
+    names.forEach(function(n){document.getElementById(n).hidden=(n!==h)});
+    document.querySelectorAll('nav a').forEach(function(a){
+      if(a.getAttribute('href')==='#'+h)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
+    });
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange',show);
+
+  /* checkboxes */
+  var boxes=document.querySelectorAll('input[data-key]');
+  boxes.forEach(function(b){
+    b.checked=!!state[b.dataset.key];
+    b.addEventListener('change',function(){state[b.dataset.key]=b.checked;save();update()});
+  });
+  function count(sel){
+    var all=document.querySelectorAll(sel),n=0;
+    all.forEach(function(b){if(b.checked)n++});
+    return [n,all.length];
+  }
+  function setBar(c,t,b){
+    var r=count(c);
+    document.getElementById(t).textContent=r[0]+' из '+r[1];
+    document.getElementById(b).style.width=(r[1]?r[0]/r[1]*100:0)+'%';
+  }
+  function update(){
+    setBar('#do-32 input[data-key]','p32t','p32b');
+    setBar('#gear input[data-key]','pgt','pgb');
+    applyFilter();
+  }
+  document.getElementById('reset32').addEventListener('click',function(){
+    document.querySelectorAll('#do-32 input[data-key]').forEach(function(b){b.checked=false;delete state[b.dataset.key]});
+    save();update();
+  });
+
+  /* gear filter */
+  var filter='all';
+  function applyFilter(){
+    document.querySelectorAll('#gear tbody tr').forEach(function(r){
+      var done=r.querySelector('input').checked, ok=true;
+      if(filter==='unique'||filter==='aspect')ok=(r.dataset.t===filter);
+      if(filter==='todo')ok=!done;
+      r.hidden=!ok;
+    });
+  }
+  document.querySelectorAll('.filters button').forEach(function(b){
+    b.addEventListener('click',function(){
+      filter=b.dataset.f;
+      document.querySelectorAll('.filters button').forEach(function(x){x.classList.toggle('on',x===b)});
+      applyFilter();
+    });
+  });
+
+  /* theme toggle */
+  document.getElementById('theme').addEventListener('click',function(){
+    var r=document.documentElement,dark=matchMedia('(prefers-color-scheme: dark)').matches;
+    var cur=r.getAttribute('data-theme')||(dark?'dark':'light');
+    r.setAttribute('data-theme',cur==='dark'?'light':'dark');
+  });
+
+  /* skill point calculator */
+  var SK=[
+    {id:'ps',n:'Penetrating Shot',fin:15,p32:10},
+    {id:'poi',n:'Poison Imbuement',fin:15,p32:5},
+    {id:'shi',n:'Shadow Imbuement',fin:0,p32:3},
+    {id:'dash',n:'Dash',fin:5,p32:3},
+    {id:'con',n:'Concealment',fin:13,p32:2},
+    {id:'clone',n:'Shadow Clone',fin:1,p32:1},
+    {id:'step',n:'Shadow Step',fin:1,p32:1},
+    {id:'shroud',n:'Dark Shroud',fin:15,p32:0},
+    {id:'oth',n:'Прочие узлы (Combo Points и др.)',fin:0,p32:6}
+  ];
+  var pts=state.pts||{};
+  var tb=document.querySelector('#sk tbody');
+  SK.forEach(function(s){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><b>'+s.n+'</b></td><td><span class="step"><button type="button" aria-label="Минус: '+s.n+'">−</button><output>0</output><button type="button" aria-label="Плюс: '+s.n+'">+</button></span></td><td class="tg">'+(s.fin?s.fin:'—')+'</td>';
+    var bs=tr.querySelectorAll('button'),out=tr.querySelector('output');
+    s.out=out;
+    bs[0].addEventListener('click',function(){setP(s.id,Math.max(0,(pts[s.id]||0)-1))});
+    bs[1].addEventListener('click',function(){setP(s.id,(pts[s.id]||0)+1)});
+    tb.appendChild(tr);
+  });
+  function setP(id,v){pts[id]=v;state.pts=pts;save();calc()}
+  function num(id){var v=parseInt(document.getElementById(id).value,10);return isNaN(v)?0:v}
+  ['lvl','ren','own'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(state['c_'+id]!==undefined&&state['c_'+id]!==null)el.value=state['c_'+id];
+    el.addEventListener('input',function(){state['c_'+id]=el.value;save();calc()});
+  });
+  function calc(){
+    var own=document.getElementById('own').value,avail;
+    if(own!==''&&!isNaN(parseInt(own,10)))avail=parseInt(own,10);
+    else avail=Math.max(0,num('lvl')-1)+Math.min(8,Math.max(0,num('ren')));
+    var spent=0;
+    SK.forEach(function(s){var v=pts[s.id]||0;s.out.textContent=v;spent+=v});
+    document.getElementById('avail').textContent='Доступно: '+avail;
+    document.getElementById('spentlbl').textContent='Потрачено: '+spent+' · Осталось: '+(avail-spent);
+    document.getElementById('spb').style.width=(avail?Math.min(100,spent/avail*100):0)+'%';
+    document.getElementById('warn').hidden=spent<=avail;
+  }
+  function preset(k){
+    pts={};SK.forEach(function(s){pts[s.id]=k?s[k]:0});
+    state.pts=pts;save();calc();
+  }
+  document.getElementById('pre32').addEventListener('click',function(){preset('p32')});
+  document.getElementById('preFin').addEventListener('click',function(){preset('fin')});
+  document.getElementById('preClr').addEventListener('click',function(){preset(null)});
+  calc();
+
+  update();show();
+})();
+</script>
+<script>try{var tg=window.Telegram&&Telegram.WebApp;if(tg){tg.ready();tg.expand();}}catch(e){}</script>
+</body></html>
