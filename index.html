@@ -98,6 +98,8 @@ td.tg{color:var(--muted);white-space:nowrap}
 .lv td:first-child{font:700 20px var(--head);width:48px;color:var(--accent)}
 .lv td.pt{white-space:nowrap;color:var(--muted);width:60px}
 .lv tr.ms td{background:var(--surface2)}
+.lv tr.me td{background:var(--accent);color:var(--accent-ink)}
+.lv tr.me td.pt,.lv tr.me .src,.lv tr.me td:first-child{color:var(--accent-ink)}
 .tag{display:inline-block;font:600 11px var(--head);letter-spacing:.08em;text-transform:uppercase;padding:1px 7px;border-radius:99px;border:1px solid var(--line);margin-left:6px;white-space:nowrap;vertical-align:middle}
 .tag.ok{color:var(--ok);border-color:var(--ok)}
 .tag.one{color:var(--warn);border-color:var(--warn)}
@@ -259,6 +261,11 @@ td.tg{color:var(--muted);white-space:nowrap}
 <!-- УРОВНИ -->
 <section id="urovni" hidden>
   <h2>Разбивка по уровням 1–32</h2>
+  <div class="box" style="margin-bottom:14px">
+    <label for="mylvl"><b>Мой уровень</b></label>
+    <input id="mylvl" type="number" min="1" max="32" inputmode="numeric" placeholder="1–32">
+    <p id="mynext" style="margin:8px 0 0;color:var(--muted);font-size:15px">Введи уровень, и я подсвечу твой шаг в таблице.</p>
+  </div>
   <p>В таблице: сколько всего очков навыков у тебя есть на этом уровне и куда вложить новое. Выделены ключевые уровни: 15, 19, 20 и 30.</p>
   <div class="note"><b>Как читать метки.</b> <span class="tag ok">подтверждено</span> совпало минимум в двух источниках. <span class="tag one">один источник</span> нашёл только в одном. <span class="tag inf">мой план</span> порядок вложения придумал я на основе правил игры. В источниках нет готовой раскладки по каждому уровню.</div>
   <div class="tw lv"><table>
@@ -435,7 +442,28 @@ td.tg{color:var(--muted);white-space:nowrap}
 (function(){
   var KEY='rogue-build-v2', state={};
   try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){state={}}
-  function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+  var tg=window.Telegram&&Telegram.WebApp, cloud=null;
+  try{if(tg&&tg.CloudStorage&&tg.isVersionAtLeast&&tg.isVersionAtLeast('6.9'))cloud=tg.CloudStorage}catch(e){}
+  function save(){
+    state._t=Date.now();
+    var j=JSON.stringify(state);
+    try{localStorage.setItem(KEY,j)}catch(e){}
+    if(cloud){try{cloud.setItem('rb',j)}catch(e){}}
+  }
+  function pullCloud(){
+    if(!cloud)return;
+    try{cloud.getItem('rb',function(err,val){
+      if(err||!val)return;
+      var c;try{c=JSON.parse(val)}catch(e){return}
+      var lt=state._t||0;
+      if(c&&c._t&&c._t>lt){
+        try{localStorage.setItem(KEY,val)}catch(e){}
+        try{if(!sessionStorage.getItem('rb-rl')){sessionStorage.setItem('rb-rl','1');location.reload()}}catch(e){}
+      }else if(lt>(c&&c._t||0)){
+        try{cloud.setItem('rb',JSON.stringify(state))}catch(e){}
+      }
+    })}catch(e){}
+  }
 
   /* tabs */
   var names=['obzor','do-32','urovni','navyki','ochki','ekip','paragon','boy','proverka'];
@@ -501,6 +529,24 @@ td.tg{color:var(--muted);white-space:nowrap}
     r.setAttribute('data-theme',cur==='dark'?'light':'dark');
   });
 
+  /* my level */
+  var ml=document.getElementById('mylvl');
+  function markLevel(scroll){
+    var v=parseInt(ml.value,10), rows=document.querySelectorAll('#urovni tbody tr'), msg=document.getElementById('mynext'), hit=null;
+    rows.forEach(function(r){
+      var n=parseInt(r.cells[0].textContent,10);
+      r.classList.toggle('me',n===v);
+      if(n===v)hit=r;
+    });
+    if(!hit){msg.textContent='Введи уровень от 1 до 32, и я подсвечу твой шаг в таблице.';return}
+    var act=hit.cells[2].querySelector('b').textContent, pts=hit.cells[1].textContent;
+    msg.textContent='Уровень '+v+': '+pts+' всего. Сейчас: '+act;
+    if(scroll)hit.scrollIntoView({block:'center',behavior:'smooth'});
+  }
+  if(state.mylvl)ml.value=state.mylvl;
+  ml.addEventListener('input',function(){state.mylvl=ml.value;save();markLevel(true)});
+  markLevel(false);
+
   /* skill point calculator */
   var SK=[
     {id:'fa',n:'Forceful Arrow',fin:0,p32:1},
@@ -551,8 +597,11 @@ td.tg{color:var(--muted);white-space:nowrap}
   document.getElementById('preClr').addEventListener('click',function(){preset(null)});
   calc();
 
-  update();show();
+  update();show();pullCloud();
 })();
 </script>
-<script>try{var tg=window.Telegram&&Telegram.WebApp;if(tg){tg.ready();tg.expand();}}catch(e){}</script>
+<script>try{var tg2=window.Telegram&&Telegram.WebApp;if(tg2){tg2.ready();tg2.expand();
+ var c=getComputedStyle(document.body).backgroundColor.match(/\d+/g);
+ if(c){var h='#'+c.slice(0,3).map(function(x){return ('0'+(+x).toString(16)).slice(-2)}).join('');
+  try{tg2.setHeaderColor(h);tg2.setBackgroundColor(h)}catch(e){}}}}catch(e){}</script>
 </body></html>
