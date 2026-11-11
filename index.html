@@ -165,7 +165,7 @@ td input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent)}
 </header>
 
 <nav aria-label="Разделы"><div class="tabs">
-  <a href="#obzor">Обзор</a><a href="#do-32">К 32 уровню</a><a href="#urovni">Уровни 1–32</a><a href="#navyki">Навыки</a><a href="#ochki">Калькулятор</a><a href="#ekip">Экипировка</a><a href="#paragon">Парагон и руны</a><a href="#boy">Бой</a><a href="#proverka">Проверка</a>
+  <a href="#obzor">Обзор</a><a href="#do-32">К 32 уровню</a><a href="#urovni">Уровни 1–70</a><a href="#navyki">Навыки</a><a href="#ochki">Калькулятор</a><a href="#ekip">Экипировка</a><a href="#paragon">Парагон и руны</a><a href="#boy">Бой</a><a href="#proverka">Проверка</a>
 </div></nav>
 
 <!-- ОБЗОР -->
@@ -180,7 +180,7 @@ td input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent)}
     <div class="box"><h3>Альтернативы</h3>
       <p>В S-tier также Dance of Knives (самый простой старт, без жёстких порогов) и Rain of Arrows. Death Trap спорный: одни оценивают на A, другие считают лучшим.</p></div>
   </div>
-  <div class="note"><b>Что проверено, а что нет.</b> Правила прокачки (потолок 70 уровня, 1 очко за уровень, специализация на 15, Inner Sight на 20, Preparation на 30) подтверждены минимум двумя источниками. Уровни открытия групп навыков (3, 4, 8, 13, 19) нашёл в одном источнике. Порядок вложения очков по уровням — мой план. Всё это помечено на вкладках «Уровни 1–32» и «Проверка».</div>
+  <div class="note"><b>Что проверено, а что нет.</b> Правила прокачки (потолок 70 уровня, 1 очко за уровень, специализация на 15, Inner Sight на 20, Preparation на 30) подтверждены минимум двумя источниками. Уровни открытия групп навыков (3, 4, 8, 13, 19) нашёл в одном источнике. Порядок вложения очков по уровням — мой план. Всё это помечено на вкладках «Уровни 1–70» и «Проверка».</div>
 
 <div class="story">
 <h2 style="margin-top:28px">Как работает билд</h2>
@@ -215,7 +215,7 @@ td input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent)}
     </div>
     <button type="button" id="reset32">Сбросить галочки</button>
   </div>
-  <div class="note">Правило «1 очко за уровень» подтверждено. Подробная раскладка по каждому уровню лежит на вкладке «Уровни 1–32».</div>
+  <div class="note">Правило «1 очко за уровень» подтверждено. Подробная раскладка по каждому уровню лежит на вкладке «Уровни 1–70».</div>
 
   <h3>Навыки</h3>
   <ul class="check" data-group="l32">
@@ -268,7 +268,7 @@ td input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent)}
   <div class="grid" style="margin-bottom:14px">
     <div class="box">
       <label for="lvl"><b>Уровень персонажа</b></label>
-      <input id="lvl" type="number" min="1" max="60" value="32" inputmode="numeric">
+      <input id="lvl" type="number" min="1" max="70" value="32" inputmode="numeric">
       <p style="margin:8px 0 0;color:var(--muted);font-size:14px">Очков: уровень − 1.</p>
     </div>
     <div class="box">
@@ -289,6 +289,7 @@ td input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent)}
   </div>
   <div class="filters" role="group" aria-label="Пресеты">
     <button type="button" id="pre32">Оценка к 32 уровню</button>
+    <button type="button" id="pre70">Оценка к 70 уровню</button>
     <button type="button" id="preFin">Цели финального билда</button>
     <button type="button" id="preClr">Очистить</button>
   </div>
@@ -296,18 +297,18 @@ td input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent)}
     <thead><tr><th>Навык</th><th>Очки</th><th>Цель в финале</th></tr></thead>
     <tbody></tbody>
   </table></div>
-  <p style="margin-top:12px;color:var(--muted);font-size:14px">Числа «цель в финале» взяты со страницы d4guides.gg. Навык можно прокачать до ранга 15, а сумма целей (65 и ещё несколько узлов) укладывается в 83 очка. Пресет «к 32» совпадает с таблицей на вкладке «Уровни 1–32» и является моим планом.</p>
+  <p style="margin-top:12px;color:var(--muted);font-size:14px">Числа «цель в финале» взяты со страницы d4guides.gg. Навык можно прокачать до ранга 15, а сумма целей (65 и ещё несколько узлов) укладывается в 83 очка. Пресеты «к 32» и «к 70» совпадают с таблицей на вкладке «Уровни 1–70» и являются моим планом.</p>
 </section>
 
 <!-- УРОВНИ -->
 <section id="urovni" hidden>
-  <h2>Разбивка по уровням 1–32</h2>
+  <h2>Разбивка по уровням 1–70</h2>
   <div class="box" style="margin-bottom:14px">
     <label for="mylvl"><b>Мой уровень</b></label>
-    <input id="mylvl" type="number" min="1" max="32" inputmode="numeric" placeholder="1–32">
+    <input id="mylvl" type="number" min="1" max="70" inputmode="numeric" placeholder="1–70">
     <p id="mynext" style="margin:8px 0 0;color:var(--muted);font-size:15px">Введи уровень, и я подсвечу твой шаг в таблице.</p>
   </div>
-  <p>В таблице: сколько всего очков навыков у тебя есть на этом уровне и куда вложить новое. Выделены ключевые уровни: 15, 19, 20 и 30.</p>
+  <p>В таблице: сколько всего очков навыков у тебя есть на этом уровне и куда вложить новое. Выделены ключевые уровни: 15, 19, 20, 30, 34, 44, 46, 50, 57, 60 и 70.</p>
   <div class="note"><b>Как читать метки.</b> <span class="tag ok">подтверждено</span> совпало минимум в двух источниках. <span class="tag one">один источник</span> нашёл только в одном. <span class="tag inf">мой план</span> порядок вложения придумал я на основе правил игры. В источниках нет готовой раскладки по каждому уровню.</div>
   <div class="tw lv"><table>
     <thead><tr><th>Ур.</th><th>Очков</th><th>Что делать</th></tr></thead>
@@ -342,14 +343,56 @@ td input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent)}
 <tr><td>29</td><td class="pt">28 оч.</td><td><b>Penetrating Shot — 12.</b><span class="tag inf">мой план</span></td></tr>
 <tr class="ms"><td>30</td><td class="pt">29 оч.</td><td><b>Poison Imbuement — 5.</b><span class="tag ok">подтверждено</span><br><span class="src">Открывается Preparation. Замени им Inner Sight, когда энергия идёт стабильно.</span></td></tr>
 <tr><td>31</td><td class="pt">30 оч.</td><td><b>Shadow Imbuement — 3.</b><span class="tag ok">подтверждено</span><br><span class="src">После 30 уровня большинство ключевых синергий уже открыто.</span></td></tr>
-<tr><td>32</td><td class="pt">31 оч.</td><td><b>Penetrating Shot — 13.</b><span class="tag inf">мой план</span><br><span class="src">Итог: 31 очко.</span></td></tr></tbody>
+<tr><td>32</td><td class="pt">31 оч.</td><td><b>Penetrating Shot — 13.</b><span class="tag inf">мой план</span><br><span class="src">Итог: 31 очко.</span></td></tr><tr><td>33</td><td class="pt">32 оч.</td><td><b>Penetrating Shot — 14.</b><span class="tag inf">мой план</span></td></tr>
+<tr class="ms"><td>34</td><td class="pt">33 оч.</td><td><b>Penetrating Shot — 15.</b><span class="tag inf">мой план</span><br><span class="src">Максимальный ранг основного навыка.</span></td></tr>
+<tr><td>35</td><td class="pt">34 оч.</td><td><b>Poison Imbuement — 6.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>36</td><td class="pt">35 оч.</td><td><b>Poison Imbuement — 7.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>37</td><td class="pt">36 оч.</td><td><b>Poison Imbuement — 8.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>38</td><td class="pt">37 оч.</td><td><b>Poison Imbuement — 9.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>39</td><td class="pt">38 оч.</td><td><b>Poison Imbuement — 10.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>40</td><td class="pt">39 оч.</td><td><b>Poison Imbuement — 11.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>41</td><td class="pt">40 оч.</td><td><b>Poison Imbuement — 12.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>42</td><td class="pt">41 оч.</td><td><b>Poison Imbuement — 13.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>43</td><td class="pt">42 оч.</td><td><b>Poison Imbuement — 14.</b><span class="tag inf">мой план</span></td></tr>
+<tr class="ms"><td>44</td><td class="pt">43 оч.</td><td><b>Poison Imbuement — 15.</b><span class="tag inf">мой план</span><br><span class="src">Ранг 15 достигнут.</span></td></tr>
+<tr><td>45</td><td class="pt">44 оч.</td><td><b>Dash — 4.</b><span class="tag inf">мой план</span></td></tr>
+<tr class="ms"><td>46</td><td class="pt">45 оч.</td><td><b>Dash — 5.</b><span class="tag inf">мой план</span><br><span class="src">Ранг как в финальном билде.</span></td></tr>
+<tr><td>47</td><td class="pt">46 оч.</td><td><b>Concealment — 3.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>48</td><td class="pt">47 оч.</td><td><b>Concealment — 4.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>49</td><td class="pt">48 оч.</td><td><b>Concealment — 5.</b><span class="tag inf">мой план</span></td></tr>
+<tr class="ms"><td>50</td><td class="pt">49 оч.</td><td><b>Concealment — 6.</b><span class="tag one">один источник</span><br><span class="src">Радиус глифа парагона растёт с 3 до 5.</span></td></tr>
+<tr><td>51</td><td class="pt">50 оч.</td><td><b>Concealment — 7.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>52</td><td class="pt">51 оч.</td><td><b>Concealment — 8.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>53</td><td class="pt">52 оч.</td><td><b>Concealment — 9.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>54</td><td class="pt">53 оч.</td><td><b>Concealment — 10.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>55</td><td class="pt">54 оч.</td><td><b>Concealment — 11.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>56</td><td class="pt">55 оч.</td><td><b>Concealment — 12.</b><span class="tag inf">мой план</span></td></tr>
+<tr class="ms"><td>57</td><td class="pt">56 оч.</td><td><b>Concealment — 13.</b><span class="tag inf">мой план</span><br><span class="src">Ранг 13 достигнут (Recuperate).</span></td></tr>
+<tr><td>58</td><td class="pt">57 оч.</td><td><b>Dark Shroud — 3.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>59</td><td class="pt">58 оч.</td><td><b>Dark Shroud — 4.</b><span class="tag inf">мой план</span></td></tr>
+<tr class="ms"><td>60</td><td class="pt">59 оч.</td><td><b>Dark Shroud — 5.</b><span class="tag one">один источник</span><br><span class="src">Зачисти все Strongholds: большой бонус к опыту.</span></td></tr>
+<tr><td>61</td><td class="pt">60 оч.</td><td><b>Dark Shroud — 6.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>62</td><td class="pt">61 оч.</td><td><b>Dark Shroud — 7.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>63</td><td class="pt">62 оч.</td><td><b>Dark Shroud — 8.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>64</td><td class="pt">63 оч.</td><td><b>Dark Shroud — 9.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>65</td><td class="pt">64 оч.</td><td><b>Dark Shroud — 10.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>66</td><td class="pt">65 оч.</td><td><b>Dark Shroud — 11.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>67</td><td class="pt">66 оч.</td><td><b>Dark Shroud — 12.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>68</td><td class="pt">67 оч.</td><td><b>Dark Shroud — 13.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>69</td><td class="pt">68 оч.</td><td><b>Dark Shroud — 14.</b><span class="tag inf">мой план</span></td></tr>
+<tr class="ms"><td>70</td><td class="pt">69 оч.</td><td><b>Dark Shroud — 15.</b><span class="tag ok">подтверждено</span><br><span class="src">Потолок уровня. Парагон открывается после 70. Обнови закалку и импринты на предметах выше уровнем, пройди Pit Tier 10 и открой Torment I. Переходи на финальный билд.</span></td></tr></tbody>
   </table></div>
   <h3>Итог к 32 уровню</h3>
   <p>Penetrating Shot 13, Poison Imbuement 5, Dash 3, Shadow Imbuement 3, Concealment 2, Dark Shroud 2, Forceful Arrow 1, Shadow Clone 1, Shadow Step 1. Всего 31 очко. Эту раскладку можно выставить в калькуляторе кнопкой «Оценка к 32 уровню».</p>
+  <h3>Итог к 70 уровню</h3>
+  <p>Penetrating Shot 15, Poison Imbuement 15, Dark Shroud 15, Concealment 13, Dash 5, Shadow Clone 1, Shadow Step 1. Это 65 очков финального билда с d4guides.gg. Ещё 4 очка (Forceful Arrow 1 и Shadow Imbuement 3) вложены на пути и в финале не используются: их можно переложить бесплатной переписью навыков, если в игре есть такая возможность, либо оставить как есть. Всего с 2 по 70 уровень даётся 69 очков, поэтому 65 + 4 сходится ровно. Дополнительные узлы по одному очку (Overflow, Consume Chance, скорость движения, длительность, перезарядка) идут из 14 очков Season Rank.</p>
+  <div class="note">Порядок для 33–70 — мой план: сначала основной навык, потом яд, мобильность, Concealment и в конце Dark Shroud. В источниках раскладки по уровням для этих уровней нет. Количество очков и ранги сходятся с финальным билдом, и это единственное, что я проверил расчётом.</div>
   <h3>Снаряжение по этапам</h3>
   <div class="grid">
     <div class="box"><h3>Уровни 1–14</h3><p>Меняй оружие на лучшее по урону: лук важнее всего, от него считается весь урон. Закалка дешёвая, не жалей.</p></div>
     <div class="box"><h3>Уровни 15–29</h3><p>Выбивай аспекты High Velocity, Ranger's, Malice, Imitated Imbuement, Debilitating Toxins. Лучший аспект атаки ставь на амулет. Играй на Hard или выше, пока зачистка остаётся быстрой.</p></div>
+    <div class="box"><h3>Уровни 33–69</h3><p>Копи лучший лук и кинжал, ищи Eaglehorn, Etna's Lost Dagger и Tibault's Will. Руны Moni + Qua и Cir + Kry на броню. Закалка на DoT и Vulnerable. На 60 уровне зачисти Strongholds ради опыта.</p></div>
+    <div class="box"><h3>Уровень 70</h3><p>Обнови закалку и импринты, пройди Pit Tier 10 для Torment I. После этого переходи на финальную экипировку и парагон.</p></div>
     <div class="box"><h3>Уровни 30–32</h3><p>Ищи Eaglehorn и Condemnation. Закалка на % урона, урон по близким врагам или Vulnerable. Защиту добавляй, если не хватает живучести.</p></div>
   </div>
 </section>
@@ -581,7 +624,7 @@ td input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent)}
       r.classList.toggle('me',n===v);
       if(n===v)hit=r;
     });
-    if(!hit){msg.textContent='Введи уровень от 1 до 32, и я подсвечу твой шаг в таблице.';return}
+    if(!hit){msg.textContent='Введи уровень от 1 до 70, и я подсвечу твой шаг в таблице.';return}
     var act=hit.cells[2].querySelector('b').textContent, pts=hit.cells[1].textContent;
     msg.textContent='Уровень '+v+': '+pts+' всего. Сейчас: '+act;
     if(scroll)hit.scrollIntoView({block:'center',behavior:'smooth'});
@@ -592,15 +635,15 @@ td input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent)}
 
   /* skill point calculator */
   var SK=[
-    {id:'fa',n:'Forceful Arrow',fin:0,p32:1},
-    {id:'ps',n:'Penetrating Shot',fin:15,p32:13},
-    {id:'poi',n:'Poison Imbuement',fin:15,p32:5},
-    {id:'shi',n:'Shadow Imbuement',fin:0,p32:3},
-    {id:'dash',n:'Dash',fin:5,p32:3},
-    {id:'con',n:'Concealment',fin:13,p32:2},
-    {id:'clone',n:'Shadow Clone',fin:1,p32:1},
-    {id:'step',n:'Shadow Step',fin:1,p32:1},
-    {id:'shroud',n:'Dark Shroud',fin:15,p32:2}
+    {id:'fa',n:'Forceful Arrow',fin:0,p32:1,p70:1},
+    {id:'ps',n:'Penetrating Shot',fin:15,p32:13,p70:15},
+    {id:'poi',n:'Poison Imbuement',fin:15,p32:5,p70:15},
+    {id:'shi',n:'Shadow Imbuement',fin:0,p32:3,p70:3},
+    {id:'dash',n:'Dash',fin:5,p32:3,p70:5},
+    {id:'con',n:'Concealment',fin:13,p32:2,p70:13},
+    {id:'clone',n:'Shadow Clone',fin:1,p32:1,p70:1},
+    {id:'step',n:'Shadow Step',fin:1,p32:1,p70:1},
+    {id:'shroud',n:'Dark Shroud',fin:15,p32:2,p70:15}
   ];
   var pts=state.pts||{};
   var tb=document.querySelector('#sk tbody');
@@ -636,6 +679,7 @@ td input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent)}
     state.pts=pts;save();calc();
   }
   document.getElementById('pre32').addEventListener('click',function(){preset('p32')});
+  document.getElementById('pre70').addEventListener('click',function(){preset('p70')});
   document.getElementById('preFin').addEventListener('click',function(){preset('fin')});
   document.getElementById('preClr').addEventListener('click',function(){preset(null)});
   calc();
