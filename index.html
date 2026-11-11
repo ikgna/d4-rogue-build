@@ -95,6 +95,15 @@ input[type=number]{width:100%;max-width:140px;font:600 18px var(--body);backgrou
 .step button{width:34px;height:34px;padding:0;font-size:20px;line-height:1}
 .step output{display:inline-block;min-width:32px;text-align:center;font:700 20px var(--head)}
 td.tg{color:var(--muted);white-space:nowrap}
+.lv td:first-child{font:700 20px var(--head);width:48px;color:var(--accent)}
+.lv td.pt{white-space:nowrap;color:var(--muted);width:60px}
+.lv tr.ms td{background:var(--surface2)}
+.tag{display:inline-block;font:600 11px var(--head);letter-spacing:.08em;text-transform:uppercase;padding:1px 7px;border-radius:99px;border:1px solid var(--line);margin-left:6px;white-space:nowrap;vertical-align:middle}
+.tag.ok{color:var(--ok);border-color:var(--ok)}
+.tag.one{color:var(--warn);border-color:var(--warn)}
+.tag.inf{color:var(--ember);border-color:var(--ember)}
+.story h3{margin-top:26px}
+.story p{max-width:70ch}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
 </style>
 </head><body>
@@ -113,7 +122,7 @@ td.tg{color:var(--muted);white-space:nowrap}
 </header>
 
 <nav aria-label="Разделы"><div class="tabs">
-  <a href="#obzor">Обзор</a><a href="#do-32">К 32 уровню</a><a href="#navyki">Навыки</a><a href="#ochki">Калькулятор</a><a href="#ekip">Экипировка</a><a href="#paragon">Парагон и руны</a><a href="#boy">Бой</a>
+  <a href="#obzor">Обзор</a><a href="#do-32">К 32 уровню</a><a href="#urovni">Уровни 1–32</a><a href="#navyki">Навыки</a><a href="#ochki">Калькулятор</a><a href="#ekip">Экипировка</a><a href="#paragon">Парагон и руны</a><a href="#boy">Бой</a><a href="#proverka">Проверка</a>
 </div></nav>
 
 <!-- ОБЗОР -->
@@ -128,7 +137,27 @@ td.tg{color:var(--muted);white-space:nowrap}
     <div class="box"><h3>Альтернативы</h3>
       <p>В S-tier также Dance of Knives (самый простой старт, без жёстких порогов) и Rain of Arrows. Death Trap спорный: одни оценивают на A, другие считают лучшим.</p></div>
   </div>
-  <div class="note"><b>Что проверено, а что нет.</b> Скиллбар, экипировка и парагон финального билда взяты со страницы d4guides.gg (автор Chrix1848). План до 32 уровня составлен по гайду Maxroll и моим выводам: точной раскладки очков по уровням в источниках нет. Рейтинги меняются с патчами.</div>
+  <div class="note"><b>Что проверено, а что нет.</b> Правила прокачки (потолок 70 уровня, 1 очко за уровень, специализация на 15, Inner Sight на 20, Preparation на 30) подтверждены минимум двумя источниками. Уровни открытия групп навыков (3, 4, 8, 13, 19) нашёл в одном источнике. Порядок вложения очков по уровням — мой план. Всё это помечено на вкладках «Уровни 1–32» и «Проверка».</div>
+
+<div class="story">
+<h2 style="margin-top:28px">Как работает билд</h2>
+<p>Билд строится вокруг одной идеи: ты стоишь на дистанции и стреляешь стрелами, которые пробивают всю линию врагов насквозь. Каждая стрела бьёт несколько раз, а ядовитая импрегнация вешает на цели урон со временем (DoT). Поэтому чем больше врагов в линии, тем сильнее урон.</p>
+<h3>Три слоя урона</h3>
+<p><b>1. Сама стрела.</b> Penetrating Shot с улучшением Shadow Shot: каждый выстрел повторяют две Тени. Ferocity (+7% урона за стак) растёт, пока ты стреляешь, и тратится на ядовитую импрегнацию.</p>
+<p><b>2. Яд.</b> Poison Imbuement повышает силу яда (Toxic Touch). Большая часть урона по боссам идёт именно от DoT, поэтому закалка на DoT стоит почти на всех слотах.</p>
+<p><b>3. Клоны и Тени.</b> Shadow Clone с вариантом Sentry ставит стационарного стрелка, а аспект Imitated Imbuement заставляет клонов и Теней копировать твой яд. Поэтому яд всегда включается до клона.</p>
+<h3>Выживание</h3>
+<p>Билд держит дистанцию: Dash и Shadow Step уводят из-под удара, Concealment даёт Скрытность и лечит. Выход из Скрытности даёт бонус урона и Fortify, так что отступление помогает и в нападении.</p>
+<h3>Энергия и перезарядки</h3>
+<p>Специализация Preparation связывает всё в цикл: трата энергии сокращает перезарядку ультимейта, а ультимейт сбрасывает остальные навыки. Dark Shroud (руна Mot) создаёт тени, которые восполняют энергию. Если энергия кончилась, цикл останавливается, и это самая частая причина просадки.</p>
+<h3>Этапы развития</h3>
+<ol class="bars">
+  <li><div><b>Уровни 1–14. Основа.</b><span>Forceful Arrow даёт энергию и Ferocity, Penetrating Shot наносит основной урон. Dash добавляет мобильность.</span></div></li>
+  <li><div><b>Уровни 15–29. Яд и клон.</b><span>На 15 открывается специализация Combo Points, затем яды, на 19 ультимейт Shadow Clone, на 20 доступен Inner Sight для спама основным навыком.</span></div></li>
+  <li><div><b>Уровни 30–70. Preparation.</b><span>С 30 уровня можно заменить Inner Sight на Preparation, как только энергия идёт стабильно. Дальше очки идут в основной навык, потом во вспомогательные. На 70 обновляешь закалку и импринты.</span></div></li>
+  <li><div><b>Уровень 70 и дальше. Финальный билд.</b><span>Eaglehorn, Etna's Lost Dagger, Tibault's Will, парагон, затем Pit 10 и Torment 1. Позже уникальные предметы переводятся в мифические.</span></div></li>
+</ol>
+</div>
   <h3>Источники</h3>
   <p><a href="https://d4guides.gg/en/build/rogue-penetrating-shot-poison-imbuement" target="_blank" rel="noopener">d4guides.gg: финальный билд</a> · <a href="https://maxroll.gg/d4/build-guides/penetrating-shot-rogue-leveling-guide" target="_blank" rel="noopener">Maxroll: прокачка</a> · <a href="https://diablobytes.com/diablo-iv/builds/rogue-tier-list/" target="_blank" rel="noopener">DiabloBytes: тир-лист</a></p>
 </section>
@@ -143,7 +172,7 @@ td.tg{color:var(--muted);white-space:nowrap}
     </div>
     <button type="button" id="reset32">Сбросить галочки</button>
   </div>
-  <div class="note">Количество очков навыков и порядок вложения ниже — мой план на основе гайда. Maxroll подтверждает только ключевое: после 30 уровня большинство синергий уже открыто, лишние очки идут сначала в основной навык.</div>
+  <div class="note">Правило «1 очко за уровень» подтверждено. Подробная раскладка по каждому уровню лежит на вкладке «Уровни 1–32».</div>
 
   <h3>Навыки</h3>
   <ul class="check" data-group="l32">
@@ -192,17 +221,17 @@ td.tg{color:var(--muted);white-space:nowrap}
 <!-- КАЛЬКУЛЯТОР -->
 <section id="ochki" hidden>
   <h2>Калькулятор очков навыков</h2>
-  <div class="note">Правило «1 очко за уровень» и число 58 — оценка, а не точные данные игры. В одном из гайдов указано 50 очков за прокачку и ещё 8 за награды Renown. Если в игре у тебя другое число, впиши его в поле «Свои очки».</div>
+  <div class="note">С 2 по 70 уровень даётся по 1 очку (всего 69), плюс до 14 очков за Season Rank, итого 83. Если в игре у тебя другое число, впиши его в поле «Свои очки».</div>
   <div class="grid" style="margin-bottom:14px">
     <div class="box">
       <label for="lvl"><b>Уровень персонажа</b></label>
       <input id="lvl" type="number" min="1" max="60" value="32" inputmode="numeric">
-      <p style="margin:8px 0 0;color:var(--muted);font-size:14px">По оценке: уровень − 1 очков.</p>
+      <p style="margin:8px 0 0;color:var(--muted);font-size:14px">Очков: уровень − 1.</p>
     </div>
     <div class="box">
-      <label for="ren"><b>Очки Renown</b></label>
-      <input id="ren" type="number" min="0" max="8" value="0" inputmode="numeric">
-      <p style="margin:8px 0 0;color:var(--muted);font-size:14px">До 8 очков за награды Renown.</p>
+      <label for="ren"><b>Очки Season Rank</b></label>
+      <input id="ren" type="number" min="0" max="14" value="0" inputmode="numeric">
+      <p style="margin:8px 0 0;color:var(--muted);font-size:14px">До 14 очков за награды Season Rank.</p>
     </div>
     <div class="box">
       <label for="own"><b>Свои очки (необязательно)</b></label>
@@ -224,7 +253,89 @@ td.tg{color:var(--muted);white-space:nowrap}
     <thead><tr><th>Навык</th><th>Очки</th><th>Цель в финале</th></tr></thead>
     <tbody></tbody>
   </table></div>
-  <p style="margin-top:12px;color:var(--muted);font-size:14px">Числа «цель в финале» взяты со страницы d4guides.gg и включают ранги от экипировки, поэтому в сумме превышают очки, которые даёт прокачка. Пресет «к 32» — мой примерный план, а не данные из источника.</p>
+  <p style="margin-top:12px;color:var(--muted);font-size:14px">Числа «цель в финале» взяты со страницы d4guides.gg. Навык можно прокачать до ранга 15, а сумма целей (65 и ещё несколько узлов) укладывается в 83 очка. Пресет «к 32» совпадает с таблицей на вкладке «Уровни 1–32» и является моим планом.</p>
+</section>
+
+<!-- УРОВНИ -->
+<section id="urovni" hidden>
+  <h2>Разбивка по уровням 1–32</h2>
+  <p>В таблице: сколько всего очков навыков у тебя есть на этом уровне и куда вложить новое. Выделены ключевые уровни: 15, 19, 20 и 30.</p>
+  <div class="note"><b>Как читать метки.</b> <span class="tag ok">подтверждено</span> совпало минимум в двух источниках. <span class="tag one">один источник</span> нашёл только в одном. <span class="tag inf">мой план</span> порядок вложения придумал я на основе правил игры. В источниках нет готовой раскладки по каждому уровню.</div>
+  <div class="tw lv"><table>
+    <thead><tr><th>Ур.</th><th>Очков</th><th>Что делать</th></tr></thead>
+    <tbody><tr><td>1</td><td class="pt">0 оч.</td><td><b>Очков ещё нет. Пройди пролог.</b><span class="tag one">один источник</span><br><span class="src">Открыта группа Basic.</span></td></tr>
+<tr><td>2</td><td class="pt">1 оч.</td><td><b>Forceful Arrow — 1.</b><span class="tag ok">подтверждено</span><br><span class="src">Первое очко. Forceful Arrow даёт энергию и Ferocity.</span></td></tr>
+<tr><td>3</td><td class="pt">2 оч.</td><td><b>Penetrating Shot — 1.</b><span class="tag one">один источник</span><br><span class="src">Открывается группа Core.</span></td></tr>
+<tr><td>4</td><td class="pt">3 оч.</td><td><b>Penetrating Shot — 2.</b><span class="tag one">один источник</span><br><span class="src">Открывается первая классовая группа (какая именно, не подтверждено).</span></td></tr>
+<tr><td>5</td><td class="pt">4 оч.</td><td><b>Penetrating Shot — 3.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>6</td><td class="pt">5 оч.</td><td><b>Penetrating Shot — 4.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>7</td><td class="pt">6 оч.</td><td><b>Penetrating Shot — 5.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>8</td><td class="pt">7 оч.</td><td><b>Penetrating Shot — 6.</b><span class="tag one">один источник</span><br><span class="src">Открывается вторая классовая группа.</span></td></tr>
+<tr><td>9</td><td class="pt">8 оч.</td><td><b>Penetrating Shot — 7.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>10</td><td class="pt">9 оч.</td><td><b>Dash — 1.</b><span class="tag one">один источник</span><br><span class="src">Maxroll берёт Dash и Shadow Step около 10 уровня, но называет их необязательными.</span></td></tr>
+<tr><td>11</td><td class="pt">10 оч.</td><td><b>Dash — 2.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>12</td><td class="pt">11 оч.</td><td><b>Penetrating Shot — 8.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>13</td><td class="pt">12 оч.</td><td><b>Poison Imbuement — 1.</b><span class="tag one">один источник</span><br><span class="src">Открывается третья классовая группа. Если импрегнации ещё закрыты, вложи очко в Penetrating Shot.</span></td></tr>
+<tr><td>14</td><td class="pt">13 оч.</td><td><b>Poison Imbuement — 2.</b><span class="tag inf">мой план</span></td></tr>
+<tr class="ms"><td>15</td><td class="pt">14 оч.</td><td><b>Penetrating Shot — 9.</b><span class="tag ok">подтверждено</span><br><span class="src">Квест на специализацию у Leyrana возле Menestad. Открываются Combo Points.</span></td></tr>
+<tr><td>16</td><td class="pt">15 оч.</td><td><b>Poison Imbuement — 3.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>17</td><td class="pt">16 оч.</td><td><b>Shadow Imbuement — 1.</b><span class="tag inf">мой план</span><br><span class="src">Для пачек врагов. Не держи обе импрегнации на перезарядке.</span></td></tr>
+<tr><td>18</td><td class="pt">17 оч.</td><td><b>Shadow Imbuement — 2.</b><span class="tag inf">мой план</span></td></tr>
+<tr class="ms"><td>19</td><td class="pt">18 оч.</td><td><b>Shadow Clone — 1.</b><span class="tag one">один источник</span><br><span class="src">Открывается группа Ultimate. Это твой ультимейт.</span></td></tr>
+<tr class="ms"><td>20</td><td class="pt">19 оч.</td><td><b>Dark Shroud — 1.</b><span class="tag ok">подтверждено</span><br><span class="src">Доступен Inner Sight: замени им специализацию, чтобы спамить основной навык.</span></td></tr>
+<tr><td>21</td><td class="pt">20 оч.</td><td><b>Dark Shroud — 2.</b><span class="tag one">один источник</span><br><span class="src">Вариант Overflow даёт регенерацию энергии (по гайду Maxroll для Dance of Knives).</span></td></tr>
+<tr><td>22</td><td class="pt">21 оч.</td><td><b>Penetrating Shot — 10.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>23</td><td class="pt">22 оч.</td><td><b>Poison Imbuement — 4.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>24</td><td class="pt">23 оч.</td><td><b>Dash — 3.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>25</td><td class="pt">24 оч.</td><td><b>Shadow Step — 1.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>26</td><td class="pt">25 оч.</td><td><b>Penetrating Shot — 11.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>27</td><td class="pt">26 оч.</td><td><b>Concealment — 1.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>28</td><td class="pt">27 оч.</td><td><b>Concealment — 2.</b><span class="tag inf">мой план</span></td></tr>
+<tr><td>29</td><td class="pt">28 оч.</td><td><b>Penetrating Shot — 12.</b><span class="tag inf">мой план</span></td></tr>
+<tr class="ms"><td>30</td><td class="pt">29 оч.</td><td><b>Poison Imbuement — 5.</b><span class="tag ok">подтверждено</span><br><span class="src">Открывается Preparation. Замени им Inner Sight, когда энергия идёт стабильно.</span></td></tr>
+<tr><td>31</td><td class="pt">30 оч.</td><td><b>Shadow Imbuement — 3.</b><span class="tag ok">подтверждено</span><br><span class="src">После 30 уровня большинство ключевых синергий уже открыто.</span></td></tr>
+<tr><td>32</td><td class="pt">31 оч.</td><td><b>Penetrating Shot — 13.</b><span class="tag inf">мой план</span><br><span class="src">Итог: 31 очко.</span></td></tr></tbody>
+  </table></div>
+  <h3>Итог к 32 уровню</h3>
+  <p>Penetrating Shot 13, Poison Imbuement 5, Dash 3, Shadow Imbuement 3, Concealment 2, Dark Shroud 2, Forceful Arrow 1, Shadow Clone 1, Shadow Step 1. Всего 31 очко. Эту раскладку можно выставить в калькуляторе кнопкой «Оценка к 32 уровню».</p>
+  <h3>Снаряжение по этапам</h3>
+  <div class="grid">
+    <div class="box"><h3>Уровни 1–14</h3><p>Меняй оружие на лучшее по урону: лук важнее всего, от него считается весь урон. Закалка дешёвая, не жалей.</p></div>
+    <div class="box"><h3>Уровни 15–29</h3><p>Выбивай аспекты High Velocity, Ranger's, Malice, Imitated Imbuement, Debilitating Toxins. Лучший аспект атаки ставь на амулет. Играй на Hard или выше, пока зачистка остаётся быстрой.</p></div>
+    <div class="box"><h3>Уровни 30–32</h3><p>Ищи Eaglehorn и Condemnation. Закалка на % урона, урон по близким врагам или Vulnerable. Защиту добавляй, если не хватает живучести.</p></div>
+  </div>
+</section>
+
+<!-- ПРОВЕРКА -->
+<section id="proverka" hidden>
+  <h2>Что проверено и как проверить самому</h2>
+  <p>Часть данных я нашёл надёжно, часть только в одном источнике, а часть никак не проверить из интернета. Для неё ниже план проверки прямо в игре.</p>
+  <h3>Подтверждено</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Факт</th><th>Откуда</th></tr></thead>
+    <tbody>
+      <tr><td>Потолок уровня — 70 (Lord of Hatred, 28 апреля 2026)</td><td>несколько источников</td></tr>
+      <tr><td>По 1 очку навыка за уровень с 2 по 70, всего 69</td><td>gamerstogether.cz; сходится с общим числом 83 в Fextralife и Maxroll</td></tr>
+      <tr><td>Дополнительные очки за Season Rank: до 14 (в одном источнике 12)</td><td>Maxroll, gamerstogether, Fextralife; числа расходятся</td></tr>
+      <tr><td>Навык можно прокачать до ранга 15</td><td>Fextralife (Lord of Hatred), совпадает с финальным билдом</td></tr>
+      <tr><td>Специализация на 15 уровне, Inner Sight на 20, Preparation на 30</td><td>Maxroll (два гайда)</td></tr>
+      <tr><td>Парагон начинается после 70 уровня</td><td>большинство источников (в старых написано 60)</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Нашёл в одном источнике</h3>
+  <p>Группы навыков открываются на 1 (Basic), 3 (Core), 4, 8 и 13 (классовые группы) и 19 (Ultimate) уровнях. Источник один: gamerstogether.cz.</p>
+  <h3>Нельзя проверить из интернета</h3>
+  <p>В источниках нет: какой именно навык Разбойницы лежит в какой классовой группе, точный уровень Dash, Shadow Step, Concealment, Poison Imbuement и Dark Shroud, а также точный порядок вложения очков. Старые данные бета-версии (Dash 8, Shadow Step 9) относятся к другому состоянию игры, на них опираться нельзя.</p>
+  <h3>План проверки в игре</h3>
+  <ol class="bars">
+    <li><div><b>Сверь счётчик очков</b><span>На каждом уровне открой дерево навыков. Должно быть «уровень − 1» свободных очков, пока ничего не потрачено. Если число другое, впиши своё в калькулятор.</span></div></li>
+    <li><div><b>Проверь ворота групп</b><span>На 3, 4, 8, 13 и 19 уровнях открой дерево и посмотри, какая группа стала доступной. Запиши, какой навык в какой группе.</span></div></li>
+    <li><div><b>Найди уровни навыков</b><span>Наведи курсор на закрытый навык: игра пишет, с какого уровня он доступен. Так узнаешь точные уровни Dash, Shadow Step, Concealment и Imbuement.</span></div></li>
+    <li><div><b>Проверь специализацию</b><span>На 15 уровне должен появиться квест у Leyrana возле Menestad. На 20 доступен Inner Sight, на 30 Preparation.</span></div></li>
+    <li><div><b>Сообщи мне</b><span>Пришли скриншот дерева навыков или напиши расхождения. Я исправлю таблицу и калькулятор на странице.</span></div></li>
+  </ol>
+  <h3>Источники</h3>
+  <p><a href="https://maxroll.gg/d4/build-guides/penetrating-shot-rogue-leveling-guide" target="_blank" rel="noopener">Maxroll: Penetrating Shot, прокачка</a> · <a href="https://maxroll.gg/d4/build-guides/dance-of-knives-rogue-leveling-guide" target="_blank" rel="noopener">Maxroll: Dance of Knives, прокачка</a> · <a href="https://gamerstogether.cz/en/diablo-4-leveling-paragon-guide/" target="_blank" rel="noopener">gamerstogether.cz: уровни 1–70</a> · <a href="https://diablo4.wiki.fextralife.com/Skills" target="_blank" rel="noopener">Fextralife: Skills</a> · <a href="https://d4guides.gg/en/build/rogue-penetrating-shot-poison-imbuement" target="_blank" rel="noopener">d4guides.gg: финальный билд</a></p>
 </section>
 
 <!-- ЭКИПИРОВКА -->
@@ -320,12 +431,12 @@ td.tg{color:var(--muted);white-space:nowrap}
 
 <script>
 (function(){
-  var KEY='rogue-build-v1', state={};
+  var KEY='rogue-build-v2', state={};
   try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){state={}}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
 
   /* tabs */
-  var names=['obzor','do-32','navyki','ochki','ekip','paragon','boy'];
+  var names=['obzor','do-32','urovni','navyki','ochki','ekip','paragon','boy','proverka'];
   function show(){
     var h=(location.hash||'').replace('#','');
     if(names.indexOf(h)<0)h='obzor';
@@ -390,15 +501,15 @@ td.tg{color:var(--muted);white-space:nowrap}
 
   /* skill point calculator */
   var SK=[
-    {id:'ps',n:'Penetrating Shot',fin:15,p32:10},
+    {id:'fa',n:'Forceful Arrow',fin:0,p32:1},
+    {id:'ps',n:'Penetrating Shot',fin:15,p32:13},
     {id:'poi',n:'Poison Imbuement',fin:15,p32:5},
     {id:'shi',n:'Shadow Imbuement',fin:0,p32:3},
     {id:'dash',n:'Dash',fin:5,p32:3},
     {id:'con',n:'Concealment',fin:13,p32:2},
     {id:'clone',n:'Shadow Clone',fin:1,p32:1},
     {id:'step',n:'Shadow Step',fin:1,p32:1},
-    {id:'shroud',n:'Dark Shroud',fin:15,p32:0},
-    {id:'oth',n:'Прочие узлы (Combo Points и др.)',fin:0,p32:6}
+    {id:'shroud',n:'Dark Shroud',fin:15,p32:2}
   ];
   var pts=state.pts||{};
   var tb=document.querySelector('#sk tbody');
@@ -421,7 +532,7 @@ td.tg{color:var(--muted);white-space:nowrap}
   function calc(){
     var own=document.getElementById('own').value,avail;
     if(own!==''&&!isNaN(parseInt(own,10)))avail=parseInt(own,10);
-    else avail=Math.max(0,num('lvl')-1)+Math.min(8,Math.max(0,num('ren')));
+    else avail=Math.max(0,num('lvl')-1)+Math.min(14,Math.max(0,num('ren')));
     var spent=0;
     SK.forEach(function(s){var v=pts[s.id]||0;s.out.textContent=v;spent+=v});
     document.getElementById('avail').textContent='Доступно: '+avail;
