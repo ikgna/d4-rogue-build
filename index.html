@@ -107,6 +107,10 @@ td.tg{color:var(--muted);white-space:nowrap}
 .story h3{margin-top:26px}
 .story p{max-width:70ch}
 
+
+html,body{min-height:var(--tg-viewport-stable-height,100vh)}
+header{padding-top:calc(28px + var(--tg-safe-area-inset-top,0px) + var(--tg-content-safe-area-inset-top,0px))}
+@media (max-width:759px){header{padding-top:calc(18px + var(--tg-safe-area-inset-top,0px) + var(--tg-content-safe-area-inset-top,0px))}}
 /* touch targets */
 label.ck{padding:12px 8px}
 label.ck input{width:22px;height:22px}
@@ -472,7 +476,7 @@ td input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent)}
 </section>
 
 <footer>Сезон 15 (Hell's Legacy). Данные собраны из открытых гайдов и могут измениться с патчами игры.
-  <button type="button" id="theme" style="margin-left:10px">Сменить тему</button></footer>
+  <button type="button" id="theme" style="margin-left:10px">Сменить тему</button><button type="button" id="fsbtn" style="margin-left:10px" hidden>Во весь экран</button></footer>
 </div>
 
 <script>
@@ -639,8 +643,28 @@ td input[type=checkbox]{width:24px;height:24px;accent-color:var(--accent)}
   update();show();pullCloud();
 })();
 </script>
-<script>try{var tg2=window.Telegram&&Telegram.WebApp;if(tg2){tg2.ready();tg2.expand();
- var c=getComputedStyle(document.body).backgroundColor.match(/\d+/g);
- if(c){var h='#'+c.slice(0,3).map(function(x){return ('0'+(+x).toString(16)).slice(-2)}).join('');
-  try{tg2.setHeaderColor(h);tg2.setBackgroundColor(h)}catch(e){}}}}catch(e){}</script>
+<script>
+try{
+  var tg2=window.Telegram&&Telegram.WebApp;
+  if(tg2){
+    tg2.ready();
+    tg2.expand();
+    try{tg2.disableVerticalSwipes&&tg2.disableVerticalSwipes()}catch(e){}
+    var c=getComputedStyle(document.body).backgroundColor.match(/\d+/g);
+    if(c){var h='#'+c.slice(0,3).map(function(x){return ('0'+(+x).toString(16)).slice(-2)}).join('');
+      try{tg2.setHeaderColor(h);tg2.setBackgroundColor(h);tg2.setBottomBarColor&&tg2.setBottomBarColor(h)}catch(e){}}
+    var phone=(tg2.platform==='android'||tg2.platform==='ios');
+    var canFs=tg2.isVersionAtLeast&&tg2.isVersionAtLeast('8.0')&&tg2.requestFullscreen;
+    if(phone&&canFs){try{tg2.requestFullscreen()}catch(e){}}
+    tg2.onEvent&&tg2.onEvent('viewportChanged',function(){try{tg2.expand()}catch(e){}});
+    var b=document.getElementById('fsbtn');
+    if(b&&canFs){
+      b.hidden=false;
+      b.addEventListener('click',function(){
+        try{tg2.isFullscreen?tg2.exitFullscreen():tg2.requestFullscreen()}catch(e){}
+      });
+    }
+  }
+}catch(e){}
+</script>
 </body></html>
